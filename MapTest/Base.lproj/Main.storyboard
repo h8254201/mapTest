@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,21 +22,51 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where do you want to go?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D10-Ml-uyu">
+                                <rect key="frame" x="20" y="40" width="335" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Owb-7Z-maG"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xAS-jx-neu" secondAttribute="trailing" id="QzE-5g-h9C"/>
+                            <constraint firstItem="D10-Ml-uyu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iog-j4-ZNb"/>
                             <constraint firstItem="xAS-jx-neu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kbN-vb-FGb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xAS-jx-neu" secondAttribute="bottom" id="nTE-Ya-VGL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="D10-Ml-uyu" secondAttribute="trailing" constant="20" id="oBM-zk-RiB"/>
+                            <constraint firstItem="D10-Ml-uyu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="oPf-V7-K4v"/>
                             <constraint firstItem="xAS-jx-neu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qm5-Ag-dAz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="googleMapView" destination="xAS-jx-neu" id="39z-p2-saY"/>
+                        <outlet property="searchDisplayController" destination="m4M-WJ-nuG" id="MgC-pl-ESu"/>
+                        <outlet property="wherePlaceTxt" destination="D10-Ml-uyu" id="Rlt-O7-Wss"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="eKu-Co-TKO">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="QVG-W5-f10"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="uIQ-S3-Gcf"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="IW4-TF-cAM"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="5ZQ-P7-7BV"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="m4M-WJ-nuG">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="37U-gd-GXS"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="cRW-BM-uoi"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="Mqo-IA-Bgw"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="v9U-xk-4p8"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
         </scene>
     </scenes>
