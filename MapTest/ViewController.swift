@@ -8,18 +8,40 @@
 
 import UIKit
 import Alamofire
+import SideMenu
 import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate {
+protocol ViewControllerDelegate {
+    func reloadRoute(placesTableViewController:PlacesTableViewController)
+}
+
+class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate,ViewControllerDelegate {
     @IBOutlet weak var googleMapView: GMSMapView!
     @IBOutlet weak var wherePlaceTxt: UITextField!
+    var polyline = GMSPolyline()
+    var path  = GMSPath()
     var placesClient = GMSPlacesClient()
     var locationManager = CLLocationManager()
     var mark = GMSMarker()
+    var apiKey = "AIzaSyDH9y8n8SHTWhUTOxsNHuBfl7itmCuP3qE"
     override func viewDidLoad() {
         super.viewDidLoad()
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "icons8-menu-50"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
+        button.addTarget(self, action: #selector(self.showSideMenu(_:)), for: .touchUpInside)
+        wherePlaceTxt.leftView = button
+        wherePlaceTxt.leftViewMode = .always
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let navc = storyboard.instantiateViewController(withIdentifier: "leftSide") as! UISideMenuNavigationController
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width / 2
+        SideMenuManager.default.menuPresentingViewControllerUserInteractionEnabled = true
+        SideMenuManager.default.menuLeftNavigationController = navc
+        
         wherePlaceTxt.delegate = self
         wherePlaceTxt.returnKeyType = .search
         wherePlaceTxt.clearButtonMode = .whileEditing
@@ -71,6 +93,42 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func reloadRoute(placesTableViewController: PlacesTableViewController) {
+        Alamofire.request(getRouteURL(places: placesTableViewController.places)).responseJSON { (response) in
+            if let json = response.result.value {
+                var dataArray = try? JSONSerialization.jsonObject(with: response.data!, options: .allowFragments) as! [String:Any]
+                self.googleMapView.clear()
+                var routes = dataArray!["routes"] as! Array<[String:Any]>
+                var overviewPolyline = routes[0]["overview_polyline"] as! [String:Any]
+                var points = overviewPolyline["points"] as! String
+                self.path = GMSMutablePath(fromEncodedPath: points)!
+                self.polyline = GMSPolyline(path: self.path)
+                self.polyline.strokeColor = .red
+                self.polyline.strokeWidth = 5.0
+                self.polyline.map = self.googleMapView
+                
+
+                for route in routes{
+                    print(route["legs"])
+                }
+            }
+        }
+
+    }
+    @IBAction func showSideMenu(_ sender: Any) {
+        if SideMenuManager.default.menuLeftNavigationController?.isHidden == true{
+            if let leftNavi = SideMenuManager.default.menuLeftNavigationController{
+                var leftVC = leftNavi.topViewController as? PlacesTableViewController
+                leftVC?.delegate = self
+                present(leftNavi, animated: true, completion: nil)
+            }
+            
+        }else{
+            dismiss(animated: true, completion: nil)
+        }
+        
+        
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         if textField.text != ""{
@@ -109,30 +167,12 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
                     var bounds = place?.viewport
                     let camera = self.googleMapView.camera(for: bounds!, insets:UIEdgeInsets())!
                     self.googleMapView.camera = camera
+                    print(place?.name)
                     delay(seconds: 0.5, closure: {
                         self.googleMapView.animate(with: GMSCameraUpdate.setTarget((place?.coordinate)!))
+                        
                     })
-//                    delay(seconds: 0.5) { () -> () in
-//                        var zoomOut = GMSCameraUpdate.zoom(to: 10)
-//                        self.googleMapView.animate(with: zoomOut)
-//
-//                        delay(seconds: 0.5, closure: { () -> () in
-//                            var vancouverCam = GMSCameraUpdate.setTarget((place?.coordinate)!)
-//                            self.googleMapView.animate(with: vancouverCam)
-//
-//                            delay(seconds: 0.5, closure: { () -> () in
-//                                var zoomIn = GMSCameraUpdate.zoom(to: 15)
-//                                self.googleMapView.animate(with: zoomIn)
-//
-//                            })
-//                        })
-//                    }
-                    
                 })
-//                for result in results {
-//                    print("Result \(result.attributedFullText) with placeID \(result.placeID)")
-//
-//                }
                 
             }
         })
@@ -141,6 +181,36 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
                 closure()
             }
         }
+    }
+    func getRouteURL(places : Array<GMSPlace>) -> URL{
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?"
+        var origin = "origin="
+        var destination = "destination="
+        var wayPoint = "waypoints="
+        for placeIndex in 0...places.count - 1{
+            let place = places[placeIndex]
+            if placeIndex == 0{
+                origin.append(place.coordinate.latitude.description + "%2C" + place.coordinate.longitude.description + "&")
+            }else if placeIndex == places.count - 1{
+                destination.append(place.coordinate.latitude.description + "%2C" + place.coordinate.longitude.description + "&")
+            }else{
+                if placeIndex != places.count - 2{
+                    wayPoint.append("via:" + place.coordinate.latitude.description + "%2C" + place.coordinate.longitude.description + "%7C")
+                }else{
+                    wayPoint.append("via:" + place.coordinate.latitude.description + "%2C" + place.coordinate.longitude.description + "&")
+                }
+                
+            }
+        }
+        let key = "key=" + self.apiKey
+        var url = URL(string: "")
+        if places.count == 2{
+            url = URL(string: urlString + origin + destination + key)
+        }else{
+            url = URL(string: urlString + origin + destination + wayPoint + key)
+        }
+        
+        return url!
     }
 }
 

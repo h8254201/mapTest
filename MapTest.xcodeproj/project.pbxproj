@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E8404FAAFA5F6B9C269B306 /* Pods_MapTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 076631D9DE0746AD6DB8266F /* Pods_MapTest.framework */; };
+		7328663220CD7EB600876EFC /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328663120CD7EB600876EFC /* PlacesTableViewController.swift */; };
 		9A9AA7D020C91FDE008893B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */; };
 		9A9AA7D220C91FDE008893B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9AA7D120C91FDE008893B5 /* ViewController.swift */; };
 		9A9AA7D520C91FDE008893B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A9AA7D320C91FDE008893B5 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		076631D9DE0746AD6DB8266F /* Pods_MapTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7328663120CD7EB600876EFC /* PlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
 		88B1B1AEDB1FF3892C9DB1FB /* Pods-MapTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapTest/Pods-MapTest.release.xcconfig"; sourceTree = "<group>"; };
 		9A9AA7CC20C91FDE008893B5 /* MapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			children = (
 				9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */,
 				9A9AA7D120C91FDE008893B5 /* ViewController.swift */,
+				7328663120CD7EB600876EFC /* PlacesTableViewController.swift */,
 				9A9AA7D320C91FDE008893B5 /* Main.storyboard */,
 				9A9AA7D620C91FE0008893B5 /* Assets.xcassets */,
 				9A9AA7D820C91FE0008893B5 /* LaunchScreen.storyboard */,
@@ -188,10 +191,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MapTest/Pods-MapTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -225,6 +230,7 @@
 			files = (
 				9A9AA7D220C91FDE008893B5 /* ViewController.swift in Sources */,
 				9A9AA7D020C91FDE008893B5 /* AppDelegate.swift in Sources */,
+				7328663220CD7EB600876EFC /* PlacesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
