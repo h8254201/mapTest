@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4E8404FAAFA5F6B9C269B306 /* Pods_MapTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 076631D9DE0746AD6DB8266F /* Pods_MapTest.framework */; };
 		7328663220CD7EB600876EFC /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328663120CD7EB600876EFC /* PlacesTableViewController.swift */; };
+		73E0C3F82131B34B00F2E853 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E0C3F72131B34B00F2E853 /* BottomSheetViewController.swift */; };
+		73E0C3FA2131B39C00F2E853 /* BottomSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73E0C3F92131B39B00F2E853 /* BottomSheetViewController.xib */; };
 		9A9AA7D020C91FDE008893B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */; };
 		9A9AA7D220C91FDE008893B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9AA7D120C91FDE008893B5 /* ViewController.swift */; };
 		9A9AA7D520C91FDE008893B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A9AA7D320C91FDE008893B5 /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		076631D9DE0746AD6DB8266F /* Pods_MapTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7328663120CD7EB600876EFC /* PlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
+		73E0C3F72131B34B00F2E853 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		73E0C3F92131B39B00F2E853 /* BottomSheetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BottomSheetViewController.xib; sourceTree = "<group>"; };
 		88B1B1AEDB1FF3892C9DB1FB /* Pods-MapTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapTest/Pods-MapTest.release.xcconfig"; sourceTree = "<group>"; };
 		9A9AA7CC20C91FDE008893B5 /* MapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +75,8 @@
 		9A9AA7CE20C91FDE008893B5 /* MapTest */ = {
 			isa = PBXGroup;
 			children = (
+				73E0C3F92131B39B00F2E853 /* BottomSheetViewController.xib */,
+				73E0C3F72131B34B00F2E853 /* BottomSheetViewController.swift */,
 				9A9AA7CF20C91FDE008893B5 /* AppDelegate.swift */,
 				9A9AA7D120C91FDE008893B5 /* ViewController.swift */,
 				7328663120CD7EB600876EFC /* PlacesTableViewController.swift */,
@@ -155,6 +161,7 @@
 				9A9AA7DA20C91FE0008893B5 /* LaunchScreen.storyboard in Resources */,
 				9A9AA7D720C91FE0008893B5 /* Assets.xcassets in Resources */,
 				9A9AA7D520C91FDE008893B5 /* Main.storyboard in Resources */,
+				73E0C3FA2131B39C00F2E853 /* BottomSheetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +238,7 @@
 				9A9AA7D220C91FDE008893B5 /* ViewController.swift in Sources */,
 				9A9AA7D020C91FDE008893B5 /* AppDelegate.swift in Sources */,
 				7328663220CD7EB600876EFC /* PlacesTableViewController.swift in Sources */,
+				73E0C3F82131B34B00F2E853 /* BottomSheetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

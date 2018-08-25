@@ -85,6 +85,7 @@ class PlacesTableViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.places[row] = place!
                     }
                     self.placesTableView.reloadData()
+                    self.delegate?.showPlace(place: place!)
                     if self.places.count >= 2{
                         self.delegate?.reloadRoute(placesTableViewController: self)
                     }

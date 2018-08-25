@@ -15,9 +15,38 @@ import GooglePlacePicker
 
 protocol ViewControllerDelegate {
     func reloadRoute(placesTableViewController:PlacesTableViewController)
+    func showPlace(place:GMSPlace)
 }
 
 class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate,ViewControllerDelegate {
+    func showPlace(place: GMSPlace) {
+//        let camera = self.googleMapView.camera(for: place.viewport!, insets:UIEdgeInsets())!
+//        self.googleMapView.camera = camera
+//        print(place.name)
+//        self.delay(seconds: 0.5, closure: {
+//            self.googleMapView.animate(with: GMSCameraUpdate.setTarget((place.coordinate)))
+//        })
+        
+        let visibleRegion = self.googleMapView.projection.visibleRegion()
+        
+        var testPath = GMSMutablePath()
+        testPath.add(visibleRegion.farLeft)
+        testPath.add(visibleRegion.nearRight)
+        var testPolyline = GMSPolyline(path: testPath)
+        testPolyline.strokeColor = .blue
+        testPolyline.strokeWidth = 5.0
+        testPolyline.map = self.googleMapView
+
+        let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+
+        
+        let filter = GMSAutocompleteFilter()
+        filter.type = .noFilter
+     
+        
+        
+    }
+    
     @IBOutlet weak var googleMapView: GMSMapView!
     @IBOutlet weak var wherePlaceTxt: UITextField!
     var polyline = GMSPolyline()
@@ -88,7 +117,13 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
 //        self.locationManager.startUpdatingLocation()
         // Do any additional setup after loading the view, typically from a nib.
     }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
     
+    addBottomSheetView()
+  }
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -98,6 +133,11 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
             if let json = response.result.value {
                 var dataArray = try? JSONSerialization.jsonObject(with: response.data!, options: .allowFragments) as! [String:Any]
                 self.googleMapView.clear()
+                
+                
+                
+                
+                
                 var routes = dataArray!["routes"] as! Array<[String:Any]>
                 var overviewPolyline = routes[0]["overview_polyline"] as! [String:Any]
                 var points = overviewPolyline["points"] as! String
@@ -168,7 +208,7 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
                     let camera = self.googleMapView.camera(for: bounds!, insets:UIEdgeInsets())!
                     self.googleMapView.camera = camera
                     print(place?.name)
-                    delay(seconds: 0.5, closure: {
+                    self.delay(seconds: 0.5, closure: {
                         self.googleMapView.animate(with: GMSCameraUpdate.setTarget((place?.coordinate)!))
                         
                     })
@@ -176,10 +216,11 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
                 
             }
         })
-        func delay(seconds: Double, closure: @escaping () -> ()) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                closure()
-            }
+        
+    }
+    func delay(seconds: Double, closure: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            closure()
         }
     }
     func getRouteURL(places : Array<GMSPlace>) -> URL{
@@ -212,6 +253,20 @@ class ViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDeleg
         
         return url!
     }
+  func addBottomSheetView() {
+    // 1- Init bottomSheetVC
+    let bottomSheetVC = BottomSheetViewController()
+    
+    // 2- Add bottomSheetVC as a child view
+    self.addChildViewController(bottomSheetVC)
+    self.view.addSubview(bottomSheetVC.view)
+    bottomSheetVC.didMove(toParentViewController: self)
+    
+    // 3- Adjust bottomSheet frame and initial position.
+    let height = view.frame.height
+    let width  = view.frame.width
+    bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+  }
 }
 
 
